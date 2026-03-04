@@ -3,7 +3,7 @@
 > A collection of practical Python automation scripts with tests and CI — built
 > for real-world tasks like data processing, API monitoring, and log analysis.
 
-![CI](https://github.com/YOUR_USERNAME/python-automation-scripts/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/MadursJohn/Freelance_Portfolio/actions/workflows/python-automation-scripts.yml/badge.svg)
 ![Python](https://img.shields.io/badge/python-3.10%20|%203.11%20|%203.12-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -24,7 +24,8 @@ All scripts use only the **Python standard library** — no pip installs needed 
 ## Quick start
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/python-automation-scripts.git
+git clone https://github.com/MadursJohn/Freelance_Portfolio.git
+cd Freelance_Portfolio/python-automation-scripts
 cd python-automation-scripts
 
 # Run any script directly — no install required

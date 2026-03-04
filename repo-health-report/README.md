@@ -3,7 +3,7 @@
 > Automatically fetch GitHub repository metrics and generate a Markdown + HTML
 > health dashboard — rebuilt weekly by a scheduled GitHub Actions workflow.
 
-![CI](https://github.com/YOUR_USERNAME/repo-health-report/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/MadursJohn/Freelance_Portfolio/actions/workflows/repo-health-report.yml/badge.svg)
 ![Python](https://img.shields.io/badge/python-3.10%20|%203.11%20|%203.12-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -30,7 +30,8 @@ This demonstrates:
 ## Quick start
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/repo-health-report.git
+git clone https://github.com/MadursJohn/Freelance_Portfolio.git
+cd Freelance_Portfolio/repo-health-report
 cd repo-health-report
 
 # Edit config.json to list the repos you want to track
@@ -57,7 +58,7 @@ Edit `config.json`:
   "repositories": [
     { "owner": "microsoft", "repo": "vscode" },
     { "owner": "pallets",   "repo": "flask" },
-    { "owner": "YOUR_USERNAME", "repo": "ci-pipeline-starter" }
+    { "owner": "MadursJohn", "repo": "Freelance_Portfolio" }
   ]
 }
 ```

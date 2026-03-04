@@ -3,7 +3,7 @@
 > A production-ready GitHub Actions CI/CD template with Python, automated testing,
 > code quality checks, and release automation — ready to drop into any Python project.
 
-![CI](https://github.com/YOUR_USERNAME/ci-pipeline-starter/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/MadursJohn/Freelance_Portfolio/actions/workflows/ci-pipeline-starter.yml/badge.svg)
 ![Python](https://img.shields.io/badge/python-3.10%20|%203.11%20|%203.12-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -50,7 +50,8 @@ print(formatter.to_markdown(result))
 
 ```bash
 # Clone
-git clone https://github.com/YOUR_USERNAME/ci-pipeline-starter.git
+git clone https://github.com/MadursJohn/Freelance_Portfolio.git
+cd Freelance_Portfolio/ci-pipeline-starter
 cd ci-pipeline-starter
 
 # Create virtual environment
@@ -103,7 +104,7 @@ push tag v*.*.*
 2. Update `pyproject.toml` with your package name and metadata
 3. Add your own tests under `tests/`
 4. Adjust the `python-version` matrix in `.github/workflows/ci.yml` as needed
-5. Replace `YOUR_USERNAME` in badge URLs with your GitHub username
+5. Push to GitHub and watch CI run automatically
 
 ---
 
