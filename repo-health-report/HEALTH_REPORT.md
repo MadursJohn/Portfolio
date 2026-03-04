@@ -1,6 +1,6 @@
 # Repository Health Report
 
-*Generated: 2026-03-04 13:58 UTC*
+*Generated: 2026-03-04 15:36 UTC*
 *Repositories tracked: 1*
 
 ## Summary
@@ -20,12 +20,12 @@
 - **Stars:** 0  |  **Forks:** 0  |  **Language:** Python
 - **Main branch:** `main`
 - **Open issues:** 0  |  **Open PRs:** 0
-- **Last push:** 2026-03-04T13:57:48Z (0d ago)
+- **Last push:** 2026-03-04T15:36:29Z (0d ago)
 
 **Recent commits:**
 
-- `5e2ed5e` fix: replace placeholder YOUR_USERNAME with real GitHub username in config.json  _João Madureira, 2026-03-04_
-- `f437fca` fix: resolve flake8 lint errors in ci-pipeline-starter and repo-health-report  _João Madureira, 2026-03-04_
-- `7b0bdca` ci: run all workflows on every push — remove paths filters  _João Madureira, 2026-03-04_
-- `c0796cc` fix: resolve all flake8 lint errors in python-automation-scripts  _João Madureira, 2026-03-04_
-- `9b7129d` ci: add root-level GitHub Actions workflows for all 3 projects  _João Madureira, 2026-03-04_
+- `948b9af` fix: remove company references from README  _João Madureira, 2026-03-04_
+- `d8f8083` fix: resolve repo owner dynamically from GITHUB_REPOSITORY_OWNER env var  _João Madureira, 2026-03-04_
+- `8f2f495` ci: update health report [skip ci]  _github-actions[bot], 2026-03-04_
+- `91d8435` fix: replace placeholder YOUR_USERNAME with real GitHub username in config.json  _João Madureira, 2026-03-04_
+- `3f14de3` fix: resolve flake8 lint errors in ci-pipeline-starter and repo-health-report  _João Madureira, 2026-03-04_
