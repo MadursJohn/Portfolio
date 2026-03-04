@@ -134,9 +134,9 @@ ci-pipeline-starter/
 
 ## Background
 
-Built from patterns developed while running CI/CD on large-scale software integration projects
-where reliable automated pipelines reduced late-stage
-integration bugs by ~25% and cut manual testing effort by ~50%.
+Built from real-world CI/CD experience on large-scale software integration projects —
+where reliable automated pipelines reduced late-stage integration bugs by ~25% and
+cut manual testing effort by ~50%.
 
 ---
 
