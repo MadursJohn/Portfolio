@@ -1,0 +1,42 @@
+name: python-automation-scripts CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'python-automation-scripts/**'
+      - '.github/workflows/python-automation-scripts.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'python-automation-scripts/**'
+
+defaults:
+  run:
+    working-directory: python-automation-scripts
+
+jobs:
+  test:
+    name: Tests (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: python-automation-scripts/requirements-dev.txt
+
+      - name: Install dev dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Lint with flake8
+        run: flake8 scripts/ tests/ --max-line-length=105
+
+      - name: Test with coverage
+        run: pytest tests/ -v --cov=scripts --cov-report=term-missing
