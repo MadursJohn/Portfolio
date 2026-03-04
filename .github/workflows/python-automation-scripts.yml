@@ -3,13 +3,9 @@ name: python-automation-scripts CI
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'python-automation-scripts/**'
-      - '.github/workflows/python-automation-scripts.yml'
   pull_request:
     branches: [ main ]
-    paths:
-      - 'python-automation-scripts/**'
+  workflow_dispatch:
 
 defaults:
   run:

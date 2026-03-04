@@ -3,13 +3,9 @@ name: ci-pipeline-starter CI
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'ci-pipeline-starter/**'
-      - '.github/workflows/ci-pipeline-starter.yml'
   pull_request:
     branches: [ main ]
-    paths:
-      - 'ci-pipeline-starter/**'
+  workflow_dispatch:
 
 defaults:
   run:

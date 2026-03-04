@@ -3,13 +3,8 @@ name: repo-health-report CI
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'repo-health-report/**'
-      - '.github/workflows/repo-health-report.yml'
   pull_request:
     branches: [ main ]
-    paths:
-      - 'repo-health-report/**'
   schedule:
     - cron: "0 8 * * 1"   # Every Monday 08:00 UTC
   workflow_dispatch:
