@@ -1,0 +1,37 @@
+name       = "task-consumer"
+main       = "main.py"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["python_workers"]
+
+# Queue consumers cannot have HTTP routes — they are triggered by the queue.
+# No [env.*.route] needed here.
+
+[env.staging]
+name = "task-consumer-staging"
+
+[env.production]
+name = "task-consumer"
+
+# ── Queue consumer binding ────────────────────────────────────────────────────
+[[queues.consumers]]
+queue             = "task-queue"
+max_batch_size    = 10
+max_batch_timeout = 30
+max_retries       = 3
+dead_letter_queue = "task-queue-dlq"
+
+# ── KV binding (consumer writes processed results back to KV) ─────────────────
+[[kv_namespaces]]
+binding    = "ITEMS_KV"
+id         = ""   # same namespace id as api-worker
+preview_id = ""
+
+[env.staging.kv_namespaces]
+[[env.staging.kv_namespaces]]
+binding = "ITEMS_KV"
+id      = ""
+
+[env.production.kv_namespaces]
+[[env.production.kv_namespaces]]
+binding = "ITEMS_KV"
+id      = ""

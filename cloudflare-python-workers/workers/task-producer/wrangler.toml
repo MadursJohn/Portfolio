@@ -1,0 +1,18 @@
+name       = "task-producer"
+main       = "main.py"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["python_workers"]
+
+[env.staging]
+name  = "task-producer-staging"
+route = { pattern = "staging.example.com/enqueue*", zone_name = "example.com" }
+
+[env.production]
+name  = "task-producer"
+route = { pattern = "example.com/enqueue*", zone_name = "example.com" }
+
+# ── Queue producer binding ────────────────────────────────────────────────────
+# Create the queue first: wrangler queues create task-queue
+[[queues.producers]]
+binding = "TASK_QUEUE"
+queue   = "task-queue"

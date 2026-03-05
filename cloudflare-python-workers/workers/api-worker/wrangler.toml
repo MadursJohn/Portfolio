@@ -1,0 +1,37 @@
+name       = "api-worker"
+main       = "main.py"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["python_workers"]
+
+# ── Environments ──────────────────────────────────────────────────────────────
+[env.staging]
+name = "api-worker-staging"
+route = { pattern = "staging.example.com/api/*", zone_name = "example.com" }
+
+[env.production]
+name = "api-worker"
+route = { pattern = "example.com/api/*", zone_name = "example.com" }
+
+# ── KV Namespace bindings ─────────────────────────────────────────────────────
+# Create with: wrangler kv:namespace create ITEMS_KV
+# Then fill in the id values below.
+[[kv_namespaces]]
+binding  = "ITEMS_KV"
+id       = ""         # wrangler kv:namespace create ITEMS_KV  → paste id here
+preview_id = ""       # wrangler kv:namespace create ITEMS_KV --preview → paste here
+
+[env.staging.kv_namespaces]
+# Override for staging environment
+[[env.staging.kv_namespaces]]
+binding = "ITEMS_KV"
+id      = ""
+
+[env.production.kv_namespaces]
+[[env.production.kv_namespaces]]
+binding = "ITEMS_KV"
+id      = ""
+
+# ── Queue producer binding ────────────────────────────────────────────────────
+[[queues.producers]]
+binding = "TASK_QUEUE"
+queue   = "task-queue"
