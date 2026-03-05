@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloudflare Python Workers — Live Demo</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #1a1a2e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .badge {
+    background: #0f3460;
+    color: #e0e0e0;
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-family: monospace;
+    border: 1px solid #1971c2;
+  }
+
+  .badge.green { border-color: #37b24d; color: #69db7c; background: #0a2e12; }
+  .badge.orange { border-color: #f6821f; color: #ffa94d; background: #2e1a05; }
+
+  .window {
+    width: 860px;
+    max-width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    margin-bottom: 28px;
+  }
+
+  .titlebar {
+    background: #2d2d2d;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red   { background: #ff5f57; }
+  .dot.yellow{ background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+
+  .titlebar-text {
+    margin-left: 8px;
+    color: #888;
+    font-size: 13px;
+    font-family: monospace;
+  }
+
+  .terminal {
+    background: #0d1117;
+    padding: 20px 24px;
+    font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: #c9d1d9;
+  }
+
+  .prompt    { color: #58a6ff; }
+  .cmd       { color: #e6edf3; }
+  .comment   { color: #6e7681; font-style: italic; }
+  .ok        { color: #3fb950; }
+  .key       { color: #79c0ff; }
+  .val       { color: #a5d6ff; }
+  .string    { color: #a8daff; }
+  .num       { color: #f0883e; }
+  .jobid     { color: #d2a8ff; }
+  .worker    { color: #ffa657; }
+  .consumer  { color: #56d364; }
+  .blank     { display: block; height: 6px; }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #6e7681;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 8px 0 4px 0;
+  }
+  .section-label::before,
+  .section-label::after {
+    content: '';
+    flex: 1;
+    border-top: 1px solid #21262d;
+  }
+
+  .sub-window {
+    width: 860px;
+    max-width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    margin-bottom: 28px;
+  }
+
+  .sub-title {
+    background: #161b22;
+    border-bottom: 1px solid #21262d;
+    padding: 8px 16px;
+    color: #8b949e;
+    font-size: 12px;
+    font-family: monospace;
+  }
+
+  .log-panel {
+    background: #0d1117;
+    padding: 14px 24px;
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: #8b949e;
+  }
+
+  .log-api      { color: #58a6ff; }
+  .log-producer { color: #ffa657; }
+  .log-consumer { color: #56d364; }
+  .log-status   { color: #6e7681; }
+</style>
+</head>
+<body>
+
+<div class="badge-row">
+  <span class="badge orange">Cloudflare Workers</span>
+  <span class="badge">Python 3.12</span>
+  <span class="badge green">CI/CD Passing</span>
+  <span class="badge">KV Storage</span>
+  <span class="badge orange">Queues</span>
+</div>
+
+<!-- Main terminal -->
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <span class="titlebar-text">cloudflare-python-workers — demo.py</span>
+  </div>
+  <div class="terminal">
+
+    <div class="section-label">start demo servers</div>
+
+    <div><span class="prompt">PS&gt;</span> <span class="cmd">python demo.py</span></div>
+    <div><span class="comment"># api-worker   -&gt;  http://localhost:8001</span></div>
+    <div><span class="comment"># task-producer -&gt;  http://localhost:8002</span></div>
+    <div><span class="comment"># task-consumer -&gt;  background thread (watching queue)</span></div>
+    <span class="blank"></span>
+
+    <div class="section-label">api-worker — CRUD over KV</div>
+
+    <div><span class="prompt">PS&gt;</span> <span class="cmd">Invoke-RestMethod http://localhost:8001/items</span></div>
+    <div><span class="key">keys </span><span class="val">: {}</span>&nbsp;&nbsp;<span class="key">count</span> <span class="val">: 0</span></div>
+    <span class="blank"></span>
+
+    <div><span class="prompt">PS&gt;</span> <span class="cmd">Invoke-RestMethod -Method POST http://localhost:8001/items/hello -Body '"world"'</span></div>
+    <div><span class="key">ok  </span><span class="val">: True</span>&nbsp;&nbsp;<span class="key">key</span> <span class="val">: hello</span></div>
+    <span class="blank"></span>
+
+    <div><span class="prompt">PS&gt;</span> <span class="cmd">Invoke-RestMethod http://localhost:8001/items/hello</span></div>
+    <div><span class="key">key  </span><span class="val">: hello</span>&nbsp;&nbsp;<span class="key">value</span> <span class="val">: world</span></div>
+    <span class="blank"></span>
+
+    <div><span class="prompt">PS&gt;</span> <span class="cmd">Invoke-RestMethod http://localhost:8001/items</span></div>
+    <div><span class="key">keys </span><span class="val">: {hello}</span>&nbsp;&nbsp;<span class="key">count</span> <span class="val">: 1</span></div>
+    <span class="blank"></span>
+
+    <div class="section-label">task-producer + task-consumer — queue flow</div>
+
+    <div><span class="prompt">PS&gt;</span> <span class="cmd">Invoke-RestMethod -Method POST http://localhost:8002/enqueue \</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmd">-Body '{"type":"store","key":"job-result","value":"done"}'</span></div>
+    <div><span class="key">ok    </span><span class="val">: True</span>&nbsp;&nbsp;<span class="key">job_id</span> <span class="jobid">: f692b762</span></div>
+    <span class="blank"></span>
+
+    <div><span class="comment"># 500ms later — consumer processes the job...</span></div>
+    <span class="blank"></span>
+
+    <div><span class="prompt">PS&gt;</span> <span class="cmd">Invoke-RestMethod http://localhost:8001/items/job-result</span></div>
+    <div><span class="key">key  </span><span class="val">: job-result</span>&nbsp;&nbsp;<span class="key">value</span> <span class="ok">: done</span></div>
+    <span class="blank"></span>
+
+    <div><span class="prompt">PS&gt;</span> <span class="cmd">Invoke-RestMethod -Method POST http://localhost:8002/enqueue \</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmd">-Body '{"type":"delete","key":"job-result"}'</span></div>
+    <div><span class="key">ok    </span><span class="val">: True</span>&nbsp;&nbsp;<span class="key">job_id</span> <span class="jobid">: aafaaf66</span></div>
+    <span class="blank"></span>
+
+    <div><span class="prompt">PS&gt;</span> <span class="cmd">Invoke-RestMethod http://localhost:8001/items</span></div>
+    <div><span class="key">keys </span><span class="val">: {}</span>&nbsp;&nbsp;<span class="key">count</span> <span class="val">: 0</span></div>
+    <span class="blank"></span>
+
+    <div><span class="prompt">PS&gt;</span> <span class="cmd">Invoke-RestMethod -Method DELETE http://localhost:8001/items/hello</span></div>
+    <div><span class="key">ok  </span><span class="val">: True</span>&nbsp;&nbsp;<span class="key">key</span> <span class="val">: hello</span></div>
+
+  </div>
+</div>
+
+<!-- Server log panel -->
+<div class="sub-window">
+  <div class="sub-title">server logs — all 3 workers</div>
+  <div class="log-panel">
+    <div><span class="log-consumer">[task-consumer]</span> <span class="log-status">Started, waiting for messages...</span></div>
+    <div><span class="log-api">[api-worker]</span>    <span class="log-status">"GET /items HTTP/1.1" 200</span></div>
+    <div><span class="log-api">[api-worker]</span>    <span class="log-status">"POST /items/hello HTTP/1.1" 201</span></div>
+    <div><span class="log-api">[api-worker]</span>    <span class="log-status">"GET /items/hello HTTP/1.1" 200</span></div>
+    <div><span class="log-api">[api-worker]</span>    <span class="log-status">"GET /items HTTP/1.1" 200</span></div>
+    <div><span class="log-producer">[task-producer]</span> <span class="log-status">Enqueued job f692b762: {type: store, key: job-result, value: done}</span></div>
+    <div><span class="log-producer">[task-producer]</span> <span class="log-status">"POST /enqueue HTTP/1.1" 202</span></div>
+    <div><span class="log-consumer">[task-consumer]</span> <span class="log-status">OK job f692b762: stored 'job-result' = 'done'</span></div>
+    <div><span class="log-api">[api-worker]</span>    <span class="log-status">"GET /items/job-result HTTP/1.1" 200</span></div>
+    <div><span class="log-producer">[task-producer]</span> <span class="log-status">Enqueued job aafaaf66: {type: delete, key: job-result}</span></div>
+    <div><span class="log-consumer">[task-consumer]</span> <span class="log-status">OK job aafaaf66: deleted 'job-result'</span></div>
+    <div><span class="log-api">[api-worker]</span>    <span class="log-status">"GET /items HTTP/1.1" 200</span></div>
+    <div><span class="log-api">[api-worker]</span>    <span class="log-status">"DELETE /items/hello HTTP/1.1" 200</span></div>
+  </div>
+</div>
+
+</body>
+</html>
