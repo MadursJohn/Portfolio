@@ -24,5 +24,3 @@ Scheduled GitHub Actions workflow that queries the GitHub REST API weekly, score
 
 ---
 
-## Contact
-- **Upwork:** [João Madureira](https://www.upwork.com)
